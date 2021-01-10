@@ -13,16 +13,18 @@ import org.json.JSONObject;
  * @author rumys
  */
 public class JsonObject {
-   
+      
     
-      public static void runInstance() throws JSONException {
-        JSONObject jObject = new JSONObject();
-        jObject.put("id", randomIdGenerator());
-        jObject.put("operation", randomOpGenerator());
-        jObject.put("num1", randomNumGenerator());
-        jObject.put("num2",randomNumGenerator());
-    
-	System.out.println(jObject);
+      public static JSONObject runInstance() throws JSONException {
+       
+      JSONObject json = new JSONObject();
+        json.put("id", randomIdGenerator());
+        json.put("operation", randomOpGenerator());
+        json.put("num1", randomNumGenerator());
+        json.put("num2",randomNumGenerator());
+        
+        return json;
+ //	System.out.println(json);
       }
   
 

@@ -4,40 +4,83 @@ package com.mycompany.mavenproject1;
 import java.io.IOException;
 import static java.lang.Thread.sleep;
 import java.net.InetSocketAddress;
-import java.net.StandardSocketOptions;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Client {
     
      static final int    PORT = 4060;
     static final String HOST = "127.0.0.1";
-    public static void runInstance()   throws IOException, InterruptedException {
-     
-        AsynchronousSocketChannel client = AsynchronousSocketChannel.open();
+    
+    
+    public static void runInstance()   throws IOException, InterruptedException, JSONException  {
+    
+        AsynchronousSocketChannel clientChannel = AsynchronousSocketChannel.open();
         InetSocketAddress hostAddress = new InetSocketAddress(HOST,PORT);
-        Future future = client.connect(hostAddress);
-        try{
-             future.get();
-        }catch(Exception e){
-           e.printStackTrace();  
-        }
+          Future future = clientChannel.connect(hostAddress);
+          
+          
        
- 
-        
+        try{
+            future.get();
+      
+        }catch(InterruptedException | ExecutionException e){
+        }
          
-            if ((client.isOpen())) {
+            JSONObject json =  JsonObject.runInstance();
+            if ((clientChannel.isOpen())) {
                 
-                 System.out.println("bağlantı başarılı client");
-            }
+            byte [] messageJson = json.toString().getBytes();
+            ByteBuffer buffer = ByteBuffer.wrap(messageJson);
+            Future result = clientChannel.write(buffer);
             
+            
+            while (! result.isDone()) {
            
+            }
            
-    }
+            buffer.clear();
+            Thread.sleep(3000);
+            
+             }
+               
+              if(clientChannel.isOpen()){
+                  
+                ByteBuffer  buffer2 = ByteBuffer.allocate(1024);
+                Future result2 = clientChannel.read(buffer2);
+                
+                while (! result2.isDone()) {
+                  
+                 }
+                
+                buffer2.flip();
+                String Strjson = new String(buffer2.array()).trim();
+                JSONObject jsonResult = new JSONObject(Strjson); 
+                
+                  System.out.println("result in client:");
+                
+                System.out.println(jsonResult.get("id"));
+                System.out.println(jsonResult.get("result"));
+              }
+                  
+              
+                 
+            
+            
+            
+            
+              
+             
+           
+            clientChannel.close();
+   
        
 
    
+}
 }
 
