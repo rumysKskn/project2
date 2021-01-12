@@ -12,34 +12,36 @@ public class Test {
    
     public static void main(String[] args) throws IOException, InterruptedException, JSONException{
         
-  
-               
-         Thread thr = new Thread(new Runnable() {
+       
+         
+                Thread thr = new Thread(new Runnable() {
              @Override
              public void run() {
-                 try {
-                     
+                 try { 
+                       
                      Server.runInstance();
-                     
-                 } catch (IOException | InterruptedException   ex) {
+                  
+                 } catch (InterruptedException | IOException   ex) {
                      Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
                  }
                  
-                 try {
-                  
-                     Client.runInstance();
-                      
-                 } catch (IOException | InterruptedException | JSONException | ExecutionException ex) {
-                     Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
-                 }
+                 
              }
          });
          
-         thr.start();
-    }
-        
-    }
+           thr.start();
+         
+           for(int i=0;i<2;i++){
+           new Thread(Client.cli).start();
+              Thread.sleep(1000);
+           }
+         
+    }   
     
+   
+    } 
+    
+
       
  
 

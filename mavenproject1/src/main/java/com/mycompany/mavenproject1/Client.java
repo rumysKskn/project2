@@ -12,32 +12,26 @@ import java.util.logging.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Client {
+public class Client extends Thread {
     
-     static final int    PORT = 6060;
-    static final String HOST = "127.0.0.1";
+    static  int  PORT = 4060;
+    static String HOST = "127.0.0.1";
     
-    
-    public static void runInstance()   throws IOException, InterruptedException, JSONException, ExecutionException  {
-        
-        try(AsynchronousSocketChannel clientChannel = AsynchronousSocketChannel.open()) {
+    static Thread cli = new Thread(new Runnable() { 
+        @Override
+             public void run() {
+             try(AsynchronousSocketChannel clientChannel = AsynchronousSocketChannel.open()) {
             InetSocketAddress hostAddress = new InetSocketAddress(HOST,PORT);
             Future future = clientChannel.connect(hostAddress);
-            
-            while(!future.isDone()) {
-				//do something
-				//or sleep
-				Thread.sleep(20);
-			}
              
                  try{
                   future.get();
       
                  }catch(InterruptedException | ExecutionException e){
                   }   
-                                      
-                    JSONObject json =  JsonObject.runInstance(); // creating object with random values
-                     System.out.println(json);
+                   
+                        JSONObject json =  JsonObject.runInstance(); // creating object with random values
+                  
                      
                     if ((clientChannel.isOpen())) {
                     
@@ -49,8 +43,9 @@ public class Client {
                             
                         }
                         buffer.clear();
-                         
-                    }
+                      //  Thread.sleep(3000);
+                    }                  
+                    
                     if(clientChannel.isOpen()){
                         
                         ByteBuffer  buffer2 = ByteBuffer.allocate(1024);
@@ -71,13 +66,20 @@ public class Client {
                         buffer2.clear();
                         
                    } 
-                     Thread.sleep(1000);
+                    Thread.currentThread();
+                   
                      clientChannel.close();
-                    
-                }   catch (InterruptedException | JSONException ex) {
+                     
+                }   catch (JSONException ex) {
                     Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    }
+    }       catch (IOException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             }
+     
+     });
+  
+     
     
 }
     

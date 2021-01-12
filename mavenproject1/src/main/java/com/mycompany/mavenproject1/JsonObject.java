@@ -30,7 +30,7 @@ public class JsonObject {
 
 
  public static int  randomIdGenerator(){
-        int random_num = (int) (Math.random() * (100) + (10) );
+        int random_num = (int) (Math.random() * (90) + (10) );
         return random_num;
     }
   public static int  randomNumGenerator(){
