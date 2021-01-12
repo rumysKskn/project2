@@ -66,7 +66,7 @@ public class Client extends Thread {
                         buffer2.clear();
                         
                    } 
-                    Thread.currentThread();
+                  
                    
                      clientChannel.close();
                      
