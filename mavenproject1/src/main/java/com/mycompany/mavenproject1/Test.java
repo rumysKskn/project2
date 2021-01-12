@@ -26,7 +26,7 @@ public class Test {
                  }
                  
                  try {
-                    
+                  
                      Client.runInstance();
                       
                  } catch (IOException | InterruptedException | JSONException | ExecutionException ex) {

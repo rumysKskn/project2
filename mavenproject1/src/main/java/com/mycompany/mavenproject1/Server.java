@@ -13,7 +13,7 @@ import org.json.JSONObject;
 
 public class Server  {
     
-    static final int    PORT = 4060;
+    static final int    PORT = 6060;
     static final String HOST = "127.0.0.1";
     static     int resultOp =0;    
     public static void runInstance()  throws IOException,InterruptedException {
@@ -25,6 +25,11 @@ public class Server  {
         
      
                 Future acceptResult = serverChannel.accept();
+                while(!acceptResult.isDone()) {
+					//sleep or do something else
+					Thread.sleep(200);				
+				}
+                
                 AsynchronousSocketChannel clientChannel = (AsynchronousSocketChannel) acceptResult.get();
                 
                  if ((clientChannel != null) && (clientChannel.isOpen())) {
@@ -55,7 +60,8 @@ public class Server  {
                 ByteBuffer bufferResult = ByteBuffer.wrap(messageResult);
                 
                 clientChannel.write(bufferResult);
-               
+                  
+                 Thread.sleep(1000);
                  clientChannel.close();
                  serverChannel.close();
                  }

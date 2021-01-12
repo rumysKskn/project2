@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 public class Client {
     
-     static final int    PORT = 4060;
+     static final int    PORT = 6060;
     static final String HOST = "127.0.0.1";
     
     
@@ -23,6 +23,12 @@ public class Client {
         try(AsynchronousSocketChannel clientChannel = AsynchronousSocketChannel.open()) {
             InetSocketAddress hostAddress = new InetSocketAddress(HOST,PORT);
             Future future = clientChannel.connect(hostAddress);
+            
+            while(!future.isDone()) {
+				//do something
+				//or sleep
+				Thread.sleep(20);
+			}
              
                  try{
                   future.get();
@@ -43,8 +49,7 @@ public class Client {
                             
                         }
                         buffer.clear();
-                         Thread.sleep(3000);
-                        
+                         
                     }
                     if(clientChannel.isOpen()){
                         
@@ -66,7 +71,9 @@ public class Client {
                         buffer2.clear();
                         
                    } 
+                     Thread.sleep(1000);
                      clientChannel.close();
+                    
                 }   catch (InterruptedException | JSONException ex) {
                     Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
     }
