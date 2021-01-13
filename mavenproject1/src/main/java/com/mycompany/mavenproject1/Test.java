@@ -11,16 +11,17 @@ public class Test {
    
    
     public static void main(String[] args) throws IOException, InterruptedException, JSONException{
-        
-       
          
+        int i=0;
+          
+           while(i<1000){
                 Thread thr = new Thread(new Runnable() {
              @Override
              public void run() {
                  try { 
                        
                      Server.runInstance();
-                  
+                      
                  } catch (InterruptedException | IOException   ex) {
                      Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
                  }
@@ -29,12 +30,34 @@ public class Test {
              }
          });
          
-           thr.start();
-         
-           for(int i=0;i<2;i++){
-           new Thread(Client.cli).start();
-              Thread.sleep(1000);
+            thr.start();
+             Client cli = new Client();
+                      cli.start();
+                    
+                      
+           while(thr.isAlive()){
+                
+            } 
+           
+                i++;
+            
+            
+            
+               
            }
+             
+              
+          
+          
+        
+          
+           
+         
+         
+              
+           
+             
+           
          
     }   
     

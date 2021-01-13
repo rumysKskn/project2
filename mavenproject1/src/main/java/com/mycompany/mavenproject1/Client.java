@@ -17,9 +17,10 @@ public class Client extends Thread {
     static  int  PORT = 4060;
     static String HOST = "127.0.0.1";
     
-    static Thread cli = new Thread(new Runnable() { 
-        @Override
+    
              public void run() {
+                 
+                
              try(AsynchronousSocketChannel clientChannel = AsynchronousSocketChannel.open()) {
             InetSocketAddress hostAddress = new InetSocketAddress(HOST,PORT);
             Future future = clientChannel.connect(hostAddress);
@@ -30,7 +31,7 @@ public class Client extends Thread {
                  }catch(InterruptedException | ExecutionException e){
                   }   
                    
-                        JSONObject json =  JsonObject.runInstance(); // creating object with random values
+                        JSONObject json =  JsonObject.CreateJson(); // creating object with random values
                   
                      
                     if ((clientChannel.isOpen())) {
@@ -43,7 +44,7 @@ public class Client extends Thread {
                             
                         }
                         buffer.clear();
-                      //  Thread.sleep(3000);
+                    //  Thread.sleep(1000);
                     }                  
                     
                     if(clientChannel.isOpen()){
@@ -61,8 +62,8 @@ public class Client extends Thread {
                         
                         
                         
-                        System.out.println(jsonResult.get("id")); // sending id
-                        System.out.println(jsonResult.get("equals")); // result of operation
+                        System.out.println("id:"+jsonResult.get("id")); // sending id
+                        System.out.println("equals:"+jsonResult.get("equals")); // result of operation
                         buffer2.clear();
                         
                    } 
@@ -76,11 +77,13 @@ public class Client extends Thread {
                 Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             }
              }
+                 }
+          
      
-     });
+     
   
-     
+
     
-}
+
     
 

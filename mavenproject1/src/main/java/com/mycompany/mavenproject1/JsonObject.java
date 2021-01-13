@@ -15,7 +15,7 @@ import org.json.JSONObject;
 public class JsonObject {
       
     
-      public static JSONObject runInstance() throws JSONException {
+      public static JSONObject CreateJson() throws JSONException {
        
       JSONObject json = new JSONObject();
         json.put("id", randomIdGenerator());
