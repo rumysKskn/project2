@@ -19,7 +19,6 @@ public class Client extends Thread {
     
     
              public void run() {
-                 
                 
              try(AsynchronousSocketChannel clientChannel = AsynchronousSocketChannel.open()) {
             InetSocketAddress hostAddress = new InetSocketAddress(HOST,PORT);
@@ -44,7 +43,7 @@ public class Client extends Thread {
                             
                         }
                         buffer.clear();
-                    //  Thread.sleep(1000);
+                  
                     }                  
                     
                     if(clientChannel.isOpen()){

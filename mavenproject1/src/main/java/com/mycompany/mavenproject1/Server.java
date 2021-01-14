@@ -16,9 +16,22 @@ public class Server  {
     static final int PORT = 4060;
     static final String HOST = "127.0.0.1";
     static  int resultOp =0;    
+    private static Server instance = null;  
      
-     
-    public static void runInstance()  throws IOException,InterruptedException {
+    private Server() {
+    }
+    
+    private static void createInstance() {
+     if (instance == null)
+       instance = new Server();
+         }
+    
+    public static Server getInstance() {
+       if (instance == null)
+           createInstance();
+         return instance;
+}
+    public void runInstance()  throws IOException,InterruptedException {
     
        try{
         final AsynchronousServerSocketChannel serverChannel = AsynchronousServerSocketChannel.open();
@@ -30,11 +43,13 @@ public class Server  {
                 AsynchronousSocketChannel clientChannel = (AsynchronousSocketChannel) acceptResult.get();
                 
                  if ((clientChannel != null) && (clientChannel.isOpen())) {
-                   ByteBuffer buffer = ByteBuffer.allocate(1024);
+                ByteBuffer buffer = ByteBuffer.allocate(1024);
                 Future result = clientChannel.read(buffer);
+                
                 while (! result.isDone()) {
                     
                 }
+               
                 buffer.flip();
                 String Strjson = new String(buffer.array()).trim();
                 System.out.println("Request:"+Strjson); // reguest json from client

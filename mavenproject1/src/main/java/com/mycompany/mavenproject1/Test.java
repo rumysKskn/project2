@@ -14,13 +14,13 @@ public class Test {
          
         int i=0;
           
-           while(i<1000){
+           while(i<3){
                 Thread thr = new Thread(new Runnable() {
              @Override
              public void run() {
                  try { 
                        
-                     Server.runInstance();
+                     Server.getInstance().runInstance();
                       
                  } catch (InterruptedException | IOException   ex) {
                      Logger.getLogger(Test.class.getName()).log(Level.SEVERE, null, ex);
@@ -30,14 +30,15 @@ public class Test {
              }
          });
          
-            thr.start();
+             thr.start();
              Client cli = new Client();
-                      cli.start();
+             cli.start();
                     
                       
-           while(thr.isAlive()){
+          while(thr.isAlive()){
                 
-            } 
+            }
+        
            
                 i++;
             
@@ -45,20 +46,7 @@ public class Test {
             
                
            }
-             
-              
-          
-          
         
-          
-           
-         
-         
-              
-           
-             
-           
-         
     }   
     
    
