@@ -14,7 +14,7 @@ public class Test {
          
         int i=0;
           
-           while(i<3){
+           while(i<1000){
                 Thread thr = new Thread(new Runnable() {
              @Override
              public void run() {
